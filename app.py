@@ -38,13 +38,13 @@ def new_student():
 
 @app.route('/students/<int:roll_no>', methods=['PUT'])
 def update_student(roll_no):
-    if not request.json or not 'roll_no' in request.json:
+    if not request.json or not 'new_roll_no' in request.json:
         abort(404)
     student = filter(lambda s: s['roll_no'] == roll_no, students)
     if len(student) == 0:
         abort(404)
-     
-
+    student[0]['roll_no']=request.json['new_roll_no']
+    return jsonify({'student':student[0]})
 
 @app.errorhandler(404)
 def not_found(error):
